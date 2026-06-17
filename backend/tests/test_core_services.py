@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from app.services.normalize_service import fallback_post_id, normalize_post
 from app.services.scoring_service import calculate_relevance_score, score_band
 from app.connectors.justone_pgy import _parse_count
+from app.config import Settings
 
 
 class NormalizeServiceTest(unittest.TestCase):
@@ -92,6 +93,16 @@ class JustOnePgyConnectorTest(unittest.TestCase):
         self.assertEqual(_parse_count("10万+"), 100000)
         self.assertEqual(_parse_count("1,280"), 1280)
         self.assertEqual(_parse_count(""), 0)
+
+
+class SettingsTest(unittest.TestCase):
+    def test_cors_origins_accepts_json_comma_and_single_url(self):
+        self.assertEqual(Settings(cors_origins='["https://app.example.com"]').cors_origin_list, ["https://app.example.com"])
+        self.assertEqual(
+            Settings(cors_origins="https://app.example.com, https://admin.example.com").cors_origin_list,
+            ["https://app.example.com", "https://admin.example.com"],
+        )
+        self.assertEqual(Settings(cors_origins="https://app.example.com").cors_origin_list, ["https://app.example.com"])
 
 
 if __name__ == "__main__":
