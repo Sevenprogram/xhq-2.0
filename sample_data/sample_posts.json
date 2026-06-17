@@ -1,0 +1,19 @@
+[
+  {
+    "platform": "xiaohongshu",
+    "platform_post_id": "xhs_002",
+    "keyword": "亲子沟通",
+    "title": "青春期亲子沟通的三个关键变化",
+    "content_text": "孩子情绪波动背后可能有学习压力、同伴关系和心理健康问题。",
+    "creator_platform_id": "creator_003",
+    "creator_nickname": "家庭教育研究员",
+    "creator_profile_url": "http://example.com/creator/3",
+    "publish_time": "2026-05-22 09:30:00",
+    "like_count": 860,
+    "comment_count": 92,
+    "collect_count": 420,
+    "share_count": 75,
+    "tags": ["亲子沟通", "青春期", "心理健康"],
+    "url": "http://example.com/post/3"
+  }
+]

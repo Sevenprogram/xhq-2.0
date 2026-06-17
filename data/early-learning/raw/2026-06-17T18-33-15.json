@@ -1,0 +1,138 @@
+[
+  {
+    "keyword": "早教机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:15.854958395",
+      "requestId": "3e24eb3707314a9a8e57ed253f609600"
+    }
+  },
+  {
+    "keyword": "幼小衔接机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:18.641673775",
+      "requestId": "f6b1294b3ddd40b2add19e9e38d7fe04"
+    }
+  },
+  {
+    "keyword": "英语启蒙机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:23.168762827",
+      "requestId": "ff4344cd04174ba89e740d0383c7ceda"
+    }
+  },
+  {
+    "keyword": "绘本阅读机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:27.034031569",
+      "requestId": "019ce332067343d0898a7fa66ec2c20e"
+    }
+  },
+  {
+    "keyword": "数学思维机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:29.457439353",
+      "requestId": "a66bc78e706740189a096ed15e4623bc"
+    }
+  },
+  {
+    "keyword": "启蒙教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:32.123044157",
+      "requestId": "1feae56a20174487bca965ac1d1ac999"
+    }
+  },
+  {
+    "keyword": "儿童学习中心",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:34.993409061",
+      "requestId": "9bdeb15b9c4042cea8d7bcc13e9296fd"
+    }
+  },
+  {
+    "keyword": "早教中心",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:38.515204655",
+      "requestId": "17e7811e44324660b70eeebc68506e84"
+    }
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "keyword": "青少年成长机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "青少年心理机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "厌学干预机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "时间管理课程",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "学习动力训练营",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  }
+]

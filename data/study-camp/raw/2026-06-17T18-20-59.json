@@ -1,0 +1,22 @@
+[
+  {
+    "keyword": "研学机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "营地教育机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "夏令营机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "自然教育机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "亲子营地品牌",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  }
+]

@@ -1,0 +1,322 @@
+[
+  {
+    "keyword": "少儿编程机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:01.043508105",
+      "requestId": "940cfcab9cdf47a1af7aeb825d1f9be6"
+    }
+  },
+  {
+    "keyword": "儿童美术机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:04.114715437",
+      "requestId": "83427bd059b74d20a9f0979c7ed989cc"
+    }
+  },
+  {
+    "keyword": "科学课机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:08.003009701",
+      "requestId": "c7c242e543c9412384778ac4f1ccc87e"
+    }
+  },
+  {
+    "keyword": "STEM教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:11.371847304",
+      "requestId": "b726d34168c5465d8a8a5db41ad871b7"
+    }
+  },
+  {
+    "keyword": "表达力课程机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:15.557415984",
+      "requestId": "0ea78930b0534c69ad12d474e2a6b36c"
+    }
+  },
+  {
+    "keyword": "逻辑思维机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:18.806599962",
+      "requestId": "5130ba70960e4b9c8b8027a586dd6436"
+    }
+  },
+  {
+    "keyword": "素质教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:21.842880566",
+      "requestId": "8fdb3447bd224e3bbd33da65c2dae5d4"
+    }
+  },
+  {
+    "keyword": "儿童成长中心",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [
+          {
+            "userId": "60d8141b0000000001002507",
+            "valid": 1,
+            "headPhoto": "https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo314fcuosa6k005o6o2gdg89871n6tj2o?imageView2/2/w/120/format/jpg",
+            "name": "快小蜗儿童成长中心",
+            "redId": "2672545139",
+            "location": "福建 泉州 晋江市",
+            "homePageDisplay": 1,
+            "travelAreaList": null,
+            "type": [],
+            "personalTags": [
+              "创业者"
+            ],
+            "fansCount": 0,
+            "likeCollectCountInfo": null,
+            "businessNoteCount": 0,
+            "totalNoteCount": null,
+            "recommend": null,
+            "picturePrice": 250.0,
+            "videoPrice": 350.0,
+            "lowerPrice": 250.0,
+            "userType": 2,
+            "showPrice": true,
+            "pictureState": 1,
+            "videoState": 1,
+            "isCollect": false,
+            "cooperateState": 1,
+            "pictureInCart": null,
+            "videoInCart": null,
+            "note": null,
+            "live": null,
+            "cps": null,
+            "noteSign": null,
+            "liveSign": null,
+            "goodRecommendPermission": null,
+            "cpc": null,
+            "pictureCpcBasePrice": "0",
+            "pictureCpcPerPrice": "0",
+            "pictureCpcEstimateNum": null,
+            "videoCpcState": null,
+            "videoCpcBasePrice": "0",
+            "videoCpcPerPrice": "0",
+            "videoCpcEstimateNum": null,
+            "pictureCpcInCart": null,
+            "videoCpcInCart": null,
+            "contentTags": null,
+            "featureTags": null,
+            "industryTag": null,
+            "gender": "男",
+            "picPriceRemind": null,
+            "videoPriceRemind": null,
+            "currentLevel": 2,
+            "nextLevel": -1,
+            "priceState": 1,
+            "resemblance": false,
+            "noteList": [
+              {
+                "noteId": "6a0150d80000000038034e31",
+                "noteType": 2,
+                "imageUrl": "http://ci.xiaohongshu.com/1040g0083200v6qqoii005o6o2gdg8987tbts1d8?imageView2/2/w/540/format/jpg/q/75",
+                "featureTags": [
+                  "合集"
+                ],
+                "contentTag": "萌娃",
+                "industryTags": null,
+                "bind": false
+              },
+              {
+                "noteId": "69f02302000000003703604d",
+                "noteType": 2,
+                "imageUrl": "http://ci.xiaohongshu.com/1040g00831vg6bb94ia005o6o2gdg89871865ga0?imageView2/2/w/540/format/jpg/q/75",
+                "featureTags": [
+                  "合集"
+                ],
+                "contentTag": "母婴",
+                "industryTags": null,
+                "bind": false
+              }
+            ],
+            "tradeType": null,
+            "clickMidNum": 0,
+            "clickMidNumMcn": 0,
+            "interMidNum": 0,
+            "fansNum": 2921,
+            "matchNoteNumber": 0,
+            "authorityList": null,
+            "processingAuthorities": null,
+            "pictureShowState": null,
+            "videoShowState": null,
+            "classifyCode": 3,
+            "predictiveExposure": 0,
+            "efficiencyValidUser": 0,
+            "pictureReadCost": "0.00",
+            "videoReadCost": "0.00",
+            "pictureClickMidNum": 0,
+            "pictureInterMidNum": 0,
+            "videoClickMidNum": 0,
+            "videoFinishRate": 0.0,
+            "videoInterMidNum": 0,
+            "fans30GrowthRate": 0.6,
+            "fans30GrowthNum": 0,
+            "nextPicturePrice": null,
+            "nextVideoPrice": null,
+            "fansRiseNum": null,
+            "fansEngageNum": null,
+            "overflowNum": null,
+            "newHighQuality": 0,
+            "isIndustryRecommend": false,
+            "picturePriceGtZero": true,
+            "videoPriceGtZero": true,
+            "lowActive": false,
+            "fansActiveIn28dLv": 90.6,
+            "fansEngageNum30dLv": 0.6,
+            "hundredLikePercent30": 0.0,
+            "thousandLikePercent30": 0.0,
+            "pictureHundredLikePercent30": 0.0,
+            "pictureThousandLikePercent30": 0.0,
+            "videoHundredLikePercent30": 0.0,
+            "videoThousandLikePercent30": 0.0,
+            "cooperType": 1,
+            "buyerType": 2,
+            "promiseImpNum": "0",
+            "kolType": 0,
+            "showPromiseTag": 0,
+            "activityList": [],
+            "controlState": 0,
+            "clothingIndustryPrice": {
+              "bizType": null,
+              "industryId": 0,
+              "picturePrice": 0,
+              "pictureState": 0,
+              "videoPrice": 0,
+              "videoState": 0
+            },
+            "fbState": 0,
+            "forecastReadUvLower": 0,
+            "forecastReadUvUpper": 0,
+            "forecastGroupCoverRateLower": 0.0,
+            "forecastGroupCoverRateUpper": 0.0,
+            "intentionInfo": {
+              "intentionText": "",
+              "intentionType": 0
+            },
+            "seedAndHarcest": null,
+            "liveImg": null,
+            "liveId": null,
+            "liveGMV": null,
+            "isStar": null,
+            "top2CategoryList": null,
+            "hasBuyerAuth": false,
+            "sellerRealIncomeAmt90d": 0.0,
+            "estimatePictureCpm": 0.0,
+            "estimatePictureCpmCompare": 0.0,
+            "estimateVideoCpm": 0.0,
+            "estimateVideoCpmCompare": 0.0,
+            "estimatePictureEngageCost": 0.0,
+            "estimatePictureEngageCostCompare": 0.0,
+            "estimateVideoEngageCost": 0.0,
+            "estimateVideoEngageCostCompare": 0.0,
+            "inviteReply48hNumRatio": 0.0,
+            "recommendReason": null,
+            "kolHeadLabel": 0,
+            "accumCoopImpMedinNum30d": 0,
+            "estimateCpuv30d": 0.0,
+            "accumPicCommonImpMedinNum30d": 0,
+            "accumVideoCommonImpMedinNum30d": 0,
+            "accumCommonImpMedinNum30d": 0,
+            "marketTarget": null,
+            "readMidCoop30": 0,
+            "interMidCoop30": 0,
+            "coopNoteNum30d": 0,
+            "specialIndustryLimit": false,
+            "kliveCnt30d": 0,
+            "avgAgmv90d": 0.0,
+            "avgLiveViewerNum": 0.0,
+            "algoRecommendReasons": null,
+            "mengagementNumMcn": 0,
+            "mcpuvNum30d": 0,
+            "mengagementNum": 0,
+            "mEngagementNum": 0,
+            "mEngagementNumMcn": 0,
+            "mCpuvNum30d": 0
+          }
+        ],
+        "total": 1,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:24.994648715",
+      "requestId": "f777c7b4a2974d0bbe3d6f2ce02793cd"
+    }
+  }
+]

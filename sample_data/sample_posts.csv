@@ -1,0 +1,3 @@
+platform,platform_post_id,keyword,title,content_text,creator_platform_id,creator_nickname,creator_profile_url,publish_time,like_count,comment_count,collect_count,share_count,tags,url
+xiaohongshu,xhs_001,青少年心理健康,孩子最近总是不说话怎么办,关于青春期孩子心理变化的分享,creator_001,亲子心理观察,http://example.com/creator/1,2026-05-20 10:00:00,1200,180,600,90,"亲子沟通;心理健康;青春期",http://example.com/post/1
+douyin,dy_001,青少年心理健康,青春期孩子厌学背后的心理原因,很多家长忽略了孩子情绪背后的信号,creator_002,青少年心理老师,http://example.com/creator/2,2026-05-21 12:00:00,3200,420,1100,300,"青少年心理;厌学;家庭教育",http://example.com/post/2
