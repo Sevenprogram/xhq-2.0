@@ -1,4 +1,5 @@
 from functools import lru_cache
+import json
 from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -12,7 +13,7 @@ class Settings(BaseSettings):
     api_prefix: str = "/api"
     database_url: str = "sqlite:///./social_intel.db"
     redis_url: str = "redis://redis:6379/0"
-    cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
     dataflow_base_url: str = ""
     dataflow_api_key: str = ""
     dataflow_auth_scheme: str = ""
@@ -33,6 +34,23 @@ class Settings(BaseSettings):
     ai_timeout: float = 60.0
 
     model_config = SettingsConfigDict(env_file=BACKEND_DIR / ".env", env_file_encoding="utf-8")
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        value = self.cors_origins.strip()
+        if not value:
+            return []
+
+        try:
+            parsed = json.loads(value)
+        except json.JSONDecodeError:
+            parsed = value
+
+        if isinstance(parsed, list):
+            return [str(item).strip() for item in parsed if str(item).strip()]
+        if isinstance(parsed, str):
+            return [item.strip().strip("\"'") for item in parsed.split(",") if item.strip()]
+        return []
 
 
 @lru_cache
