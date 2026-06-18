@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import analytics, creators, dataflow, imports, jobs, keywords, marketplace, posts, projects
 from app.config import get_settings
-from app.database import init_db
+from app.database import SessionLocal, init_db
+from app.services.merchant_profile import get_or_create_merchant_profile
+from app.services.marketplace_seed import seed_marketplace_deals
 
 settings = get_settings()
 
@@ -31,6 +33,9 @@ app.include_router(marketplace.router, prefix=settings.api_prefix)
 @app.on_event("startup")
 def startup() -> None:
     init_db()
+    with SessionLocal() as db:
+        get_or_create_merchant_profile(db)
+        seed_marketplace_deals(db)
 
 
 @app.get("/health")

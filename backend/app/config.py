@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     api_prefix: str = "/api"
     database_url: str = "sqlite:///./social_intel.db"
     redis_url: str = "redis://redis:6379/0"
-    cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
+    cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001"
     dataflow_base_url: str = ""
     dataflow_api_key: str = ""
     dataflow_auth_scheme: str = ""

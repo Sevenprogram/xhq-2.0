@@ -3,8 +3,8 @@ import "./globals.css";
 import { AppNav } from "@/components/app-nav";
 
 export const metadata: Metadata = {
-  title: "小黄雀商单 Demo",
-  description: "透明达人撮合平台 Demo"
+  title: "小黄雀商单",
+  description: "面向商家的透明达人商单广场"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

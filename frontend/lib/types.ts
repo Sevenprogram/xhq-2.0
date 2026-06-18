@@ -143,3 +143,82 @@ export type PgyCreator = {
   trend: "快速上升" | "上升" | "稳定" | string;
   raw: unknown;
 };
+
+export type MarketplaceDeal = {
+  id: number;
+  external_id: string;
+  brand_name: string;
+  title: string;
+  city: string;
+  budget_min: number;
+  budget_max: number;
+  target_tracks: string[];
+  target_audience: string;
+  deliverable: string;
+  brief: string;
+  contact_wechat: string;
+  status: "published" | "offline" | "pending_review" | string;
+  source: "seed" | "merchant" | string;
+  merchant_key?: string | null;
+  merchant_display_name?: string | null;
+  reason_tags: string[];
+  min_followers: number;
+  max_followers: number;
+  match_score: number;
+  suggested_payout: number;
+  application_count: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type MarketplaceDealListResponse = {
+  items: MarketplaceDeal[];
+  total: number;
+};
+
+export type MarketplaceDealCreate = {
+  brand_name: string;
+  title: string;
+  city: string;
+  budget_min: number;
+  budget_max: number;
+  target_tracks: string[];
+  target_audience: string;
+  deliverable: string;
+  brief: string;
+  contact_wechat: string;
+};
+
+export type DealApplication = {
+  id: number;
+  deal_id: number;
+  nickname?: string | null;
+  wechat: string;
+  profile_link: string;
+  expected_quote?: number | null;
+  note?: string | null;
+  status: "pending_contact" | "contacted" | "selected" | "rejected" | string;
+  created_at: string;
+  updated_at: string;
+  deal?: MarketplaceDeal | null;
+};
+
+export type DealApplicationCreate = {
+  wechat: string;
+  profile_link: string;
+  expected_quote?: number | null;
+  note?: string | null;
+  nickname?: string | null;
+};
+
+export type DealApplicationListResponse = {
+  items: DealApplication[];
+  total: number;
+};
+
+export type MerchantProfile = {
+  merchant_key: string;
+  display_name: string;
+  created_at: string;
+  updated_at: string;
+};

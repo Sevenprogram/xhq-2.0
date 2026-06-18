@@ -1,0 +1,2 @@
+DEFAULT_MERCHANT_KEY = "test_merchant"
+DEFAULT_MERCHANT_DISPLAY_NAME = "测试商家"

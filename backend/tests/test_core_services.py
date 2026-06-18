@@ -2,6 +2,16 @@ import unittest
 from datetime import datetime, timezone
 from unittest.mock import patch
 
+from fastapi import HTTPException
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from app.api.marketplace import create_deal, list_deals, submit_application, update_application_status, update_merchant_profile
+from app.database import Base
+from app.models import DealApplication, MarketplaceDeal
+from app.schemas.marketplace import ApplicationCreate, ApplicationStatusUpdate, DealCreate, MerchantProfileUpdate
+from app.services.merchant_defaults import DEFAULT_MERCHANT_KEY
+from app.services.marketplace_seed import seed_marketplace_deals
 from app.services.normalize_service import fallback_post_id, normalize_post
 from app.services.scoring_service import calculate_relevance_score, score_band
 from app.connectors.justone_pgy import _parse_count
@@ -146,6 +156,106 @@ class XhsUserResolveTest(unittest.TestCase):
         self.assertEqual(resolved.user_id, "618c7bb400000000100076a5")
         self.assertEqual(resolved.red_id, "743613526")
         self.assertEqual(resolved.match_type, "red_id")
+
+
+class MarketplaceTest(unittest.TestCase):
+    def setUp(self):
+        self.engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False})
+        Base.metadata.create_all(bind=self.engine)
+        self.SessionLocal = sessionmaker(bind=self.engine, autoflush=False, autocommit=False)
+
+    def tearDown(self):
+        Base.metadata.drop_all(bind=self.engine)
+
+    def test_seed_marketplace_deals_is_idempotent(self):
+        with self.SessionLocal() as db:
+            first = seed_marketplace_deals(db)
+            second = seed_marketplace_deals(db)
+            deals = db.query(MarketplaceDeal).all()
+
+        self.assertGreater(first, 0)
+        self.assertEqual(second, 0)
+        self.assertEqual(len(deals), first)
+
+    def test_create_deal_submit_application_and_update_status(self):
+        with self.SessionLocal() as db:
+            deal = create_deal(
+                DealCreate(
+                    brand_name="测试品牌",
+                    title="测试商单",
+                    city="深圳",
+                    budget_min=100,
+                    budget_max=300,
+                    target_tracks=["教育成长"],
+                    target_audience="家长",
+                    deliverable="小红书图文 1 条",
+                    brief="测试说明",
+                    contact_wechat="brand_wechat",
+                ),
+                db,
+            )
+            application = submit_application(
+                deal["id"],
+                ApplicationCreate(wechat="creator_wechat", profile_link="https://www.xiaohongshu.com/user/profile/test"),
+                db,
+            )
+            updated = update_application_status(application["id"], ApplicationStatusUpdate(status="contacted"), db)
+
+            saved = db.get(DealApplication, application["id"])
+
+        self.assertEqual(deal["status"], "published")
+        self.assertEqual(deal["merchant_key"], DEFAULT_MERCHANT_KEY)
+        self.assertEqual(application["status"], "pending_contact")
+        self.assertEqual(updated["status"], "contacted")
+        self.assertEqual(saved.status, "contacted")
+
+    def test_merchant_profile_and_deal_filter(self):
+        with self.SessionLocal() as db:
+            profile = update_merchant_profile(MerchantProfileUpdate(display_name="新测试商家"), db)
+            merchant_deal = create_deal(
+                DealCreate(
+                    brand_name="测试品牌",
+                    title="测试商单",
+                    city="深圳",
+                    budget_min=100,
+                    budget_max=300,
+                    target_tracks=["教育成长"],
+                    target_audience="家长",
+                    deliverable="小红书图文 1 条",
+                    brief="测试说明",
+                    contact_wechat="brand_wechat",
+                ),
+                db,
+            )
+            seed_marketplace_deals(db)
+            merchant_list = list_deals(merchant_key=DEFAULT_MERCHANT_KEY, include_offline=True, limit=20, offset=0, db=db)
+
+        self.assertEqual(profile["display_name"], "新测试商家")
+        self.assertEqual(merchant_deal["merchant_display_name"], "新测试商家")
+        self.assertEqual(merchant_list["total"], 1)
+        self.assertEqual(merchant_list["items"][0]["id"], merchant_deal["id"])
+
+    def test_duplicate_application_is_rejected(self):
+        with self.SessionLocal() as db:
+            deal = create_deal(
+                DealCreate(
+                    brand_name="测试品牌",
+                    title="测试商单",
+                    city="深圳",
+                    budget_min=100,
+                    budget_max=300,
+                    target_tracks=["教育成长"],
+                    target_audience="家长",
+                    deliverable="小红书图文 1 条",
+                    brief="测试说明",
+                    contact_wechat="brand_wechat",
+                ),
+                db,
+            )
+            payload = ApplicationCreate(wechat="creator_wechat", profile_link="https://www.xiaohongshu.com/user/profile/test")
+            submit_application(deal["id"], payload, db)
+            with self.assertRaises(HTTPException):
+                submit_application(deal["id"], payload, db)
 
 
 if __name__ == "__main__":

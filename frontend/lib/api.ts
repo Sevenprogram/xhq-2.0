@@ -1,6 +1,24 @@
-import type { DashboardSummary, Job, Keyword, Post, Project, Creator, PgyCreator, XhsCreatorProfile, XhsResolvedUser, XhsTrackAnalysis } from "./types";
+import type {
+  DashboardSummary,
+  DealApplication,
+  DealApplicationCreate,
+  DealApplicationListResponse,
+  Job,
+  Keyword,
+  MarketplaceDeal,
+  MarketplaceDealCreate,
+  MarketplaceDealListResponse,
+  MerchantProfile,
+  Post,
+  Project,
+  Creator,
+  PgyCreator,
+  XhsCreatorProfile,
+  XhsResolvedUser,
+  XhsTrackAnalysis
+} from "./types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:18000/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -32,6 +50,24 @@ export const api = {
     request<{ track: string; items: PgyCreator[] }>(
       `/marketplace/pgy-creators?track=${encodeURIComponent(track)}&limit=${limit}`
     ),
+  marketplaceDeals: (query = "") => request<MarketplaceDealListResponse>(`/marketplace/deals${query}`),
+  marketplaceDeal: (dealId: number | string) => request<MarketplaceDeal>(`/marketplace/deals/${encodeURIComponent(String(dealId))}`),
+  createMarketplaceDeal: (payload: MarketplaceDealCreate) =>
+    request<MarketplaceDeal>("/marketplace/deals", { method: "POST", body: JSON.stringify(payload) }),
+  merchantProfile: () => request<MerchantProfile>("/marketplace/merchant-profile"),
+  updateMerchantProfile: (displayName: string) =>
+    request<MerchantProfile>("/marketplace/merchant-profile", { method: "PATCH", body: JSON.stringify({ display_name: displayName }) }),
+  submitDealApplication: (dealId: number | string, payload: DealApplicationCreate) =>
+    request<DealApplication>(`/marketplace/deals/${encodeURIComponent(String(dealId))}/applications`, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    }),
+  dealApplications: (query = "") => request<DealApplicationListResponse>(`/marketplace/applications${query}`),
+  updateDealApplicationStatus: (applicationId: number, status: DealApplication["status"]) =>
+    request<DealApplication>(`/marketplace/applications/${applicationId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ status })
+    }),
   jobs: () => request<Job[]>("/jobs"),
   resolveXhsUser: (value: string) => request<XhsResolvedUser>(`/dataflow/xhs/resolve-user?value=${encodeURIComponent(value)}`),
   xhsCreatorProfile: (userId: string) => request<XhsCreatorProfile>(`/dataflow/xhs/users/${encodeURIComponent(userId)}`),
