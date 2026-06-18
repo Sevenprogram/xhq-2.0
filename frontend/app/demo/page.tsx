@@ -130,8 +130,10 @@ function CreatorView({ onAcceptDeal }: { onAcceptDeal: (deal: Deal) => void }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [resolvedBy, setResolvedBy] = useState("");
+  const [dealBatchIndex, setDealBatchIndex] = useState(0);
   const displayCreator = useMemo(() => buildDisplayCreator(profile), [profile]);
   const pricing = useMemo(() => buildPricingBreakdown(displayCreator), [displayCreator]);
+  const matchedDeals = useMemo(() => buildMatchedDeals(displayCreator, dealBatchIndex), [displayCreator, dealBatchIndex]);
 
   async function searchCreator() {
     const query = profileUrl.trim();
@@ -270,9 +272,15 @@ function CreatorView({ onAcceptDeal }: { onAcceptDeal: (deal: Deal) => void }) {
       </section>
 
       <section>
-        <SectionHeader title="匹配商单" description="平台按关键词、粉丝画像和报价透明度匹配当前可接合作。" />
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHeader title="匹配商单" description="平台按赛道、地区、粉丝量和报价透明度匹配当前可接合作。" />
+          <button className="btn secondary justify-center" onClick={() => setDealBatchIndex((current) => current + 1)} type="button">
+            <RefreshCw size={16} />
+            换一批
+          </button>
+        </div>
         <div className="mt-3 grid gap-3 lg:grid-cols-3">
-          {mockDeals.map((deal) => (
+          {matchedDeals.map((deal) => (
             <article key={deal.id} className="panel flex flex-col p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -281,10 +289,18 @@ function CreatorView({ onAcceptDeal }: { onAcceptDeal: (deal: Deal) => void }) {
                 </div>
                 <span className="rounded-full bg-teal/10 px-2.5 py-1 text-xs font-semibold text-teal">{deal.keywordMatch}% 匹配</span>
               </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {deal.reasonTags.slice(0, 3).map((tag) => (
+                  <span key={tag} className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                    {tag}
+                  </span>
+                ))}
+              </div>
               <dl className="mt-4 space-y-3 text-sm">
                 <InfoLine label="合作主题" value={deal.theme} />
-                <InfoLine label="预算" value={`${formatCurrency(deal.budget)} / 条`} />
+                <InfoLine label="预算区间" value={`${formatCurrency(deal.budgetMin)} - ${formatCurrency(deal.budgetMax)} / 条`} />
                 <InfoLine label="交付要求" value={deal.deliverable} />
+                <InfoLine label="推荐理由" value={buildDealReason(deal, displayCreator)} />
                 <InfoLine label="达人预计到账" value={formatCurrency(deal.creatorPayout)} strong />
               </dl>
               <button className="btn mt-5 justify-center" data-testid={`accept-${deal.id}`} onClick={() => onAcceptDeal(deal)} type="button">
@@ -1257,6 +1273,134 @@ function buildPricingBreakdown(creator: DisplayCreator) {
     { label: "互动资产加成", value: components.engagement, prefix: "+" },
     { label: "赛道标签加成", value: components.vertical, prefix: "+" }
   ];
+}
+
+function buildMatchedDeals(creator: DisplayCreator, batchIndex: number): Deal[] {
+  const scored = mockDeals
+    .map((deal) => scoreDealForCreator(deal, creator))
+    .sort((a, b) => b.keywordMatch - a.keywordMatch || b.creatorPayout - a.creatorPayout);
+  const batchSize = 3;
+  const batchCount = Math.max(1, Math.ceil(scored.length / batchSize));
+  const start = (batchIndex % batchCount) * batchSize;
+  return scored.slice(start, start + batchSize);
+}
+
+function scoreDealForCreator(deal: Deal, creator: DisplayCreator): Deal {
+  const trackScore = calculateDealTrackScore(deal, creator);
+  const quoteScore = calculateDealQuoteScore(deal, creator.suggestedQuote);
+  const followerScore = calculateDealFollowerScore(deal, creator.followers);
+  const cityScore = calculateDealCityScore(deal, creator.location);
+  const assetScore = calculateDealAssetScore(creator);
+  const score = Math.round(trackScore * 0.4 + quoteScore * 0.25 + followerScore * 0.15 + cityScore * 0.1 + assetScore * 0.1);
+  const creatorPayout = clamp(roundQuote(clamp(creator.suggestedQuote, deal.budgetMin, deal.budgetMax)), deal.budgetMin, deal.budgetMax);
+  const reasonTags = buildDealReasonTags(deal, creator, {
+    trackScore,
+    quoteScore,
+    followerScore,
+    cityScore,
+    assetScore
+  });
+
+  return {
+    ...deal,
+    budget: creatorPayout,
+    creatorPayout,
+    keywordMatch: clamp(score, 50, 98),
+    reasonTags
+  };
+}
+
+function calculateDealTrackScore(deal: Deal, creator: DisplayCreator) {
+  const creatorText = normalizeMatchText([...creator.tracks, creator.bio || "", creator.nickname].join(" "));
+  const matches = deal.targetTracks.filter((track) => creatorText.includes(normalizeMatchText(track)));
+  if (matches.length > 0) return clamp(72 + matches.length * 12, 72, 100);
+  if (deal.targetTracks.some((track) => relatedTrackText(track).some((keyword) => creatorText.includes(keyword)))) return 78;
+  if (creator.tracks.includes("小红书达人") || creator.tracks.includes("内容种草")) return 64;
+  return 52;
+}
+
+function calculateDealQuoteScore(deal: Deal, suggestedQuote: number) {
+  if (suggestedQuote >= deal.budgetMin && suggestedQuote <= deal.budgetMax) return 100;
+  const nearest = suggestedQuote < deal.budgetMin ? deal.budgetMin : deal.budgetMax;
+  const gapRatio = Math.abs(suggestedQuote - nearest) / Math.max(nearest, 1);
+  return clamp(Math.round(100 - gapRatio * 120), 35, 92);
+}
+
+function calculateDealFollowerScore(deal: Deal, followers: number) {
+  if (followers >= deal.minFollowers && followers <= deal.maxFollowers) return 100;
+  if (followers < deal.minFollowers) {
+    return clamp(Math.round((followers / Math.max(deal.minFollowers, 1)) * 88), 25, 88);
+  }
+  const overRatio = (followers - deal.maxFollowers) / Math.max(deal.maxFollowers, 1);
+  return clamp(Math.round(92 - overRatio * 45), 45, 92);
+}
+
+function calculateDealCityScore(deal: Deal, location?: string | null) {
+  if (deal.city === "全国") return 92;
+  if (!location) return 70;
+  const locationText = normalizeMatchText(location);
+  return locationText.includes(normalizeMatchText(deal.city)) ? 100 : 62;
+}
+
+function calculateDealAssetScore(creator: DisplayCreator) {
+  const interactionScore = clamp(Math.sqrt(Math.max(creator.interactions30d, 0)) * 1.8, 35, 100);
+  const noteScore = clamp(creator.noteCount * 2, 35, 100);
+  return Math.round(interactionScore * 0.65 + noteScore * 0.35);
+}
+
+function buildDealReasonTags(
+  deal: Deal,
+  creator: DisplayCreator,
+  scores: { trackScore: number; quoteScore: number; followerScore: number; cityScore: number; assetScore: number }
+) {
+  const tags = [...deal.reasonTags];
+  if (scores.trackScore >= 78) tags.unshift("赛道匹配");
+  if (scores.quoteScore >= 90) tags.unshift("报价合适");
+  if (scores.cityScore >= 90) tags.unshift(deal.city === "全国" ? "全国可投" : `${deal.city}同城`);
+  if (scores.followerScore >= 90) tags.unshift("粉丝量达标");
+  if (scores.assetScore >= 80) tags.unshift("互动资产好");
+  if (creator.suggestedQuote < deal.budgetMin) tags.unshift("可上探报价");
+  return Array.from(new Set(tags)).slice(0, 5);
+}
+
+function buildDealReason(deal: Deal, creator: DisplayCreator) {
+  const trackMatch = deal.targetTracks.filter((track) => creator.tracks.some((creatorTrack) => normalizeMatchText(creatorTrack).includes(normalizeMatchText(track))));
+  const parts = [
+    trackMatch.length ? `赛道贴合 ${trackMatch.slice(0, 2).join("、")}` : `目标赛道 ${deal.targetTracks.slice(0, 2).join("、")}`,
+    deal.city === "全国" ? "全国可投放" : `${deal.city}投放`,
+    `预算覆盖 ${formatCurrency(deal.budgetMin)}-${formatCurrency(deal.budgetMax)}`
+  ];
+  return parts.join(" · ");
+}
+
+function relatedTrackText(track: string) {
+  const map: Record<string, string[]> = {
+    青少年成长: ["教育", "家庭", "亲子", "校园", "成长", "学习"],
+    学科提分: ["学习", "提分", "数学", "英语", "备考", "课程"],
+    教育成长: ["教育", "学习", "课程", "家长", "孩子", "成长"],
+    素质能力: ["科学", "美育", "表达", "项目式", "能力", "启蒙"],
+    升学择校: ["升学", "择校", "中考", "小升初", "规划", "学校"],
+    家庭教育: ["亲子", "家长", "孩子", "青春期", "沟通"],
+    低龄启蒙: ["亲子", "阅读", "启蒙", "英语", "少儿"],
+    母婴亲子: ["亲子", "孩子", "宝宝", "家庭"],
+    校园生活: ["校园", "学生", "大学", "宿舍", "学校"],
+    深圳探店: ["深圳", "探店", "本地", "同城"],
+    本地生活: ["本地", "同城", "探店", "周末", "消费"],
+    本地消费: ["消费", "优惠", "团购", "门店"],
+    精致消费: ["消费", "女性", "白领", "护肤", "穿搭", "生活方式"],
+    咖啡甜品: ["咖啡", "甜品", "下午茶", "探店"],
+    美食探店: ["美食", "吃", "探店", "餐厅", "火锅"],
+    旅游出行: ["旅游", "旅行", "出行", "路线", "攻略"],
+    研学营地: ["研学", "营地", "自然", "夏令营"],
+    亲子出行: ["亲子", "周末", "露营", "研学"],
+    美妆穿搭: ["美妆", "穿搭", "护肤", "妆容", "ootd"],
+    健康健身: ["健身", "运动", "普拉提", "健康"]
+  };
+  return (map[track] || [track]).map(normalizeMatchText);
+}
+
+function normalizeMatchText(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "");
 }
 
 function estimateExposure(followers: number, interactions: number, noteCount: number) {
