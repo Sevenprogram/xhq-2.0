@@ -377,7 +377,6 @@ function BrandView() {
               <tr key={creator.userId}>
                 <td>
                   <div className="font-medium text-ink">{creator.name}</div>
-                  <div className="mt-1 text-xs text-slate-500">小红书号 {creator.redId}</div>
                 </td>
                 <td>{creator.location || "-"}</td>
                 <td>
