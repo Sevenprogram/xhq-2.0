@@ -159,6 +159,8 @@ function MerchantWorkspace() {
   const [expandedDealId, setExpandedDealId] = useState<number | null>(null);
   const [form, setForm] = useState<MarketplaceDealCreate>(initialDealForm);
   const [message, setMessage] = useState("");
+  const [publishStatus, setPublishStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [publishMessage, setPublishMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -200,26 +202,33 @@ function MerchantWorkspace() {
     };
 
     if (!normalizedForm.brand_name || !normalizedForm.title || !normalizedForm.target_audience || !normalizedForm.deliverable) {
-      setMessage("请填写品牌名称、商单标题、目标达人/人群和交付要求");
+      setPublishStatus("error");
+      setPublishMessage("请填写品牌名称、商单标题、目标达人/人群和交付要求");
       return;
     }
 
     if (normalizedForm.budget_min <= 0 || normalizedForm.budget_max <= 0 || normalizedForm.budget_min > normalizedForm.budget_max) {
-      setMessage("请填写有效预算区间，最高预算不能低于最低预算");
+      setPublishStatus("error");
+      setPublishMessage("请填写有效预算区间，最高预算不能低于最低预算");
       return;
     }
     try {
       setMessage("");
-      await api.createMarketplaceDeal(normalizedForm);
+      setPublishStatus("submitting");
+      setPublishMessage("正在发布商单，请稍候...");
+      const createdDeal = await api.createMarketplaceDeal(normalizedForm);
       setForm({
         ...initialDealForm,
         brand_name: merchantProfile?.display_name || "",
         contact_wechat: normalizedForm.contact_wechat
       });
       await refresh();
-      setMessage("商单已发布，并已展示到商单广场");
+      setExpandedDealId(createdDeal.id);
+      setPublishStatus("success");
+      setPublishMessage(`「${createdDeal.title}」已发布到商单广场`);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "商单发布失败");
+      setPublishStatus("error");
+      setPublishMessage(error instanceof Error ? error.message : "商单发布失败");
     }
   }
 
@@ -374,10 +383,11 @@ function MerchantWorkspace() {
             />
           </label>
           <FormInput label="运营联系微信" value={form.contact_wechat} onChange={(value) => setForm({ ...form, contact_wechat: value })} placeholder="可选；留空则让达人直接在页面报名" />
-          <button className="btn w-full justify-center" onClick={publishDeal} type="button">
-            <CheckCircle2 size={16} />
-            发布到商单广场
+          <button className="btn w-full justify-center" disabled={publishStatus === "submitting"} onClick={publishDeal} type="button">
+            {publishStatus === "submitting" ? <RefreshCw className="animate-spin" size={16} /> : <CheckCircle2 size={16} />}
+            {publishStatus === "submitting" ? "正在发布" : "发布到商单广场"}
           </button>
+          {publishMessage ? <PublishFeedback status={publishStatus} message={publishMessage} /> : null}
         </div>
       </section>
 
@@ -497,6 +507,23 @@ function DealApplicationsPanel({
           </tbody>
         </table>
       </div>
+    </div>
+  );
+}
+
+function PublishFeedback({ status, message }: { status: "idle" | "submitting" | "success" | "error"; message: string }) {
+  const styles =
+    status === "success"
+      ? "border-teal/30 bg-teal/5 text-teal"
+      : status === "error"
+        ? "border-coral/30 bg-coral/5 text-coral"
+        : "border-line bg-slate-50 text-slate-600";
+  const Icon = status === "submitting" ? RefreshCw : CheckCircle2;
+
+  return (
+    <div className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${styles}`}>
+      <Icon className={status === "submitting" ? "animate-spin" : ""} size={16} />
+      <span>{message}</span>
     </div>
   );
 }
