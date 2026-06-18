@@ -1,0 +1,22 @@
+[
+  {
+    "keyword": "少儿编程机构",
+    "error": "request failed after retries: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"
+  },
+  {
+    "keyword": "儿童美术机构",
+    "error": "request failed after retries: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"
+  },
+  {
+    "keyword": "科学课机构",
+    "error": "request failed after retries: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"
+  },
+  {
+    "keyword": "STEM教育品牌",
+    "error": "request failed after retries: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"
+  },
+  {
+    "keyword": "表达力课程机构",
+    "error": "request failed after retries: [WinError 10013] 以一种访问权限不允许的方式做了一个访问套接字的尝试。"
+  }
+]

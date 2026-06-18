@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-06-17T18-45-02",
+  "tracks": [
+    {
+      "track": "学科提分",
+      "slug": "subject-boost",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    },
+    {
+      "track": "升学择校",
+      "slug": "admission-planning",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    },
+    {
+      "track": "素质能力",
+      "slug": "competency",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    },
+    {
+      "track": "研学营地",
+      "slug": "study-camp",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    },
+    {
+      "track": "家庭教育",
+      "slug": "family-education",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    },
+    {
+      "track": "低龄启蒙",
+      "slug": "early-learning",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    },
+    {
+      "track": "青少年成长",
+      "slug": "teen-growth",
+      "total": 30,
+      "competitors": 30,
+      "creators": 0
+    }
+  ]
+}

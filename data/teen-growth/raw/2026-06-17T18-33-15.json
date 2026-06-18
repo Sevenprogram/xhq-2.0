@@ -1,0 +1,138 @@
+[
+  {
+    "keyword": "青少年成长机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:42.515600112",
+      "requestId": "8cffe8aee8234a0eaf0d41a768b693e9"
+    }
+  },
+  {
+    "keyword": "青少年心理机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:45.59143302",
+      "requestId": "44b15c19c19e4553a2d96ddf473aa787"
+    }
+  },
+  {
+    "keyword": "厌学干预机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:35:58.19677091",
+      "requestId": "1471392104fe422ab7363c08d20eaf10"
+    }
+  },
+  {
+    "keyword": "时间管理课程",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:36:04.223228077",
+      "requestId": "b071791f0a9e4007936e453c80f499ae"
+    }
+  },
+  {
+    "keyword": "学习动力训练营",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:36:07.222730191",
+      "requestId": "3d3e19d86d094c0eaee85888a8b86a12"
+    }
+  },
+  {
+    "keyword": "青春期教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:36:09.80608983",
+      "requestId": "a63b5aa5193c4c3e8c14b01fcc14c3c7"
+    }
+  },
+  {
+    "keyword": "青少年训练营",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:36:12.855564232",
+      "requestId": "89271ad067934cd8930514e0fc2a2c98"
+    }
+  },
+  {
+    "keyword": "心理咨询中心",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:36:15.379050182",
+      "requestId": "1150c62ce47b4c4dbaad16b0d245d4b3"
+    }
+  }
+]

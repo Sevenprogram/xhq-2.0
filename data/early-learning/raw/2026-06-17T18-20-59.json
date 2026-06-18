@@ -1,0 +1,22 @@
+[
+  {
+    "keyword": "早教机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "幼小衔接机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "英语启蒙课程",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "绘本阅读机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "数学思维机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  }
+]

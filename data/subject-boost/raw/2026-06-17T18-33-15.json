@@ -1,0 +1,138 @@
+[
+  {
+    "keyword": "数学辅导机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:13.181912852",
+      "requestId": "d333a3a7cf1b490cb66625ce31fc4225"
+    }
+  },
+  {
+    "keyword": "中考冲刺机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:15.973147019",
+      "requestId": "b65beec134234c848acf67bb6a01d0df"
+    }
+  },
+  {
+    "keyword": "一对一辅导机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:19.634937515",
+      "requestId": "b3027202f1154b2fa6586284b72ea3a1"
+    }
+  },
+  {
+    "keyword": "学科辅导机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:22.620289983",
+      "requestId": "6979cf451daf40b5b9c9299ec57432ea"
+    }
+  },
+  {
+    "keyword": "教辅品牌",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:25.891545664",
+      "requestId": "146aef37db7a43f9a4bac19b87d6eeb4"
+    }
+  },
+  {
+    "keyword": "网课机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:28.099891487",
+      "requestId": "492fdad4562f4cee99241f919237604c"
+    }
+  },
+  {
+    "keyword": "教育培训机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:30.439426027",
+      "requestId": "ca3b8e543e5a44899196c8176b3fa3a7"
+    }
+  },
+  {
+    "keyword": "课外辅导机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:33.534929591",
+      "requestId": "2cc730a1212540aea7697c59ad31a019"
+    }
+  }
+]

@@ -1,0 +1,138 @@
+[
+  {
+    "keyword": "研学机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:30.142727741",
+      "requestId": "68df6a59e10441939d05ef0aae145451"
+    }
+  },
+  {
+    "keyword": "营地教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:32.776325036",
+      "requestId": "420c2e495a484bfb98eedb4d2f376fa0"
+    }
+  },
+  {
+    "keyword": "夏令营机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:35.145933978",
+      "requestId": "212fb7543bc948e69e8955418c7abf8f"
+    }
+  },
+  {
+    "keyword": "自然教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:37.509141547",
+      "requestId": "c9b67760dc51474289f742fef76c563b"
+    }
+  },
+  {
+    "keyword": "亲子营地品牌",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:39.94610284",
+      "requestId": "7716d4cf01e848b2b8761c7c0d0c4a62"
+    }
+  },
+  {
+    "keyword": "户外教育机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:42.404121768",
+      "requestId": "8775459e40fe42c4ae1957a49290d4bb"
+    }
+  },
+  {
+    "keyword": "研学旅行机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:45.388994265",
+      "requestId": "e2c1e2e3dc2f47b3afcdd82dfa160c2f"
+    }
+  },
+  {
+    "keyword": "儿童营地中心",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:34:47.842570591",
+      "requestId": "e66c9efbf9ac4ed6a40d1c4c75cd7384"
+    }
+  }
+]

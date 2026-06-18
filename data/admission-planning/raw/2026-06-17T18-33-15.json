@@ -1,0 +1,138 @@
+[
+  {
+    "keyword": "升学规划机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:35.915746363",
+      "requestId": "b36f1a6a094344d995d723d28168529d"
+    }
+  },
+  {
+    "keyword": "择校咨询机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:38.422125372",
+      "requestId": "360fb28a60ff4de2834be5374b3302ad"
+    }
+  },
+  {
+    "keyword": "国际学校咨询",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:40.83454557",
+      "requestId": "c56716cea40b4da8823b1c3bd51d66a7"
+    }
+  },
+  {
+    "keyword": "志愿填报机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:43.574206972",
+      "requestId": "d49174e5914549759260d8b51a0a2313"
+    }
+  },
+  {
+    "keyword": "留学规划机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:46.247075009",
+      "requestId": "5a84bd4ed94a4dcbae12f0ac7653e17a"
+    }
+  },
+  {
+    "keyword": "国际课程中心",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:50.409271068",
+      "requestId": "17923d6027244b6e919643eedaa525e4"
+    }
+  },
+  {
+    "keyword": "A-Level课程机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:55.091698287",
+      "requestId": "54dd56b39fd942329fcdd5a2e02f4c3f"
+    }
+  },
+  {
+    "keyword": "DSE课程机构",
+    "payload": {
+      "code": 0,
+      "data": {
+        "kols": [],
+        "total": 0,
+        "trackId": "kolSearch_00fbc9950e0d451ba597c36cafd6b555",
+        "highlightWords": [],
+        "resultType": 2,
+        "redirect2NickSearch": false
+      },
+      "message": null,
+      "recordTime": "2026-06-17T18:33:58.272000666",
+      "requestId": "6dbc771fad97422d8731426c4ce2689c"
+    }
+  }
+]

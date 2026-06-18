@@ -1,0 +1,22 @@
+[
+  {
+    "keyword": "家庭教育机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "父母课堂机构",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "亲子沟通课程",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "家长成长课程",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  },
+  {
+    "keyword": "家庭教育品牌",
+    "error": "Just One API returned code 601: INSUFFICIENT BALANCE"
+  }
+]
