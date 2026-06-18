@@ -1,10 +1,12 @@
 import unittest
 from datetime import datetime, timezone
+from unittest.mock import patch
 
 from app.services.normalize_service import fallback_post_id, normalize_post
 from app.services.scoring_service import calculate_relevance_score, score_band
 from app.connectors.justone_pgy import _parse_count
 from app.config import Settings
+from app.api.dataflow import _extract_xhs_user_id, _find_tikhub_user_search_match, _resolve_xhs_user_value
 
 
 class NormalizeServiceTest(unittest.TestCase):
@@ -103,6 +105,47 @@ class SettingsTest(unittest.TestCase):
             ["https://app.example.com", "https://admin.example.com"],
         )
         self.assertEqual(Settings(cors_origins="https://app.example.com").cors_origin_list, ["https://app.example.com"])
+
+
+class XhsUserResolveTest(unittest.TestCase):
+    def test_extract_xhs_user_id_from_profile_url(self):
+        url = "https://www.xiaohongshu.com/user/profile/618c7bb400000000100076a5?xsec_token=abc"
+        self.assertEqual(_extract_xhs_user_id(url), "618c7bb400000000100076a5")
+
+    def test_find_tikhub_user_search_match_prefers_exact_red_id(self):
+        payload = {
+            "data": {
+                "data": {
+                    "users": [
+                        {"id": "other", "red_id": "abc", "name": "wrong"},
+                        {"id": "618c7bb400000000100076a5", "red_id": "5277123250", "name": "很会吃就是了"},
+                    ]
+                }
+            }
+        }
+        match = _find_tikhub_user_search_match("5277123250", payload)
+        self.assertEqual(match["id"], "618c7bb400000000100076a5")
+
+    def test_find_tikhub_user_search_match_does_not_fallback_for_numeric_red_id(self):
+        payload = {"data": {"data": {"users": [{"id": "other", "red_id": "26500250358", "name": "小红薯"}]}}}
+        self.assertIsNone(_find_tikhub_user_search_match("5277123250", payload))
+
+    def test_resolve_numeric_red_id_uses_search_before_profile_lookup(self):
+        payload = {
+            "data": {
+                "data": {
+                    "users": [
+                        {"id": "618c7bb400000000100076a5", "red_id": "743613526", "name": "测试达人"},
+                    ]
+                }
+            }
+        }
+        with patch("app.api.dataflow.search_tikhub_xhs_users", return_value=payload):
+            resolved = _resolve_xhs_user_value("743613526")
+
+        self.assertEqual(resolved.user_id, "618c7bb400000000100076a5")
+        self.assertEqual(resolved.red_id, "743613526")
+        self.assertEqual(resolved.match_type, "red_id")
 
 
 if __name__ == "__main__":

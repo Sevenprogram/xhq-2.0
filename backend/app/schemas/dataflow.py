@@ -29,6 +29,17 @@ class XhsCreatorProfile(BaseModel):
     raw: dict[str, Any]
 
 
+class XhsResolvedUser(BaseModel):
+    source: str = "tikhub"
+    input: str
+    user_id: str
+    red_id: str | None = None
+    nickname: str | None = None
+    avatar_url: str | None = None
+    match_type: str
+    raw: dict[str, Any] = {}
+
+
 class XhsTrackAnalysis(BaseModel):
     user_id: str
     tracks: list[str]

@@ -109,6 +109,17 @@ export type XhsCreatorProfile = {
   raw: unknown;
 };
 
+export type XhsResolvedUser = {
+  source: string;
+  input: string;
+  user_id: string;
+  red_id?: string | null;
+  nickname?: string | null;
+  avatar_url?: string | null;
+  match_type: string;
+  raw: unknown;
+};
+
 export type XhsTrackAnalysis = {
   user_id: string;
   tracks: string[];

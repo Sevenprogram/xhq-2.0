@@ -129,19 +129,23 @@ function CreatorView({ onAcceptDeal }: { onAcceptDeal: (deal: Deal) => void }) {
   const [profile, setProfile] = useState<XhsCreatorProfile | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [resolvedBy, setResolvedBy] = useState("");
   const displayCreator = useMemo(() => buildDisplayCreator(profile), [profile]);
   const pricing = useMemo(() => buildPricingBreakdown(displayCreator), [displayCreator]);
 
   async function searchCreator() {
-    const userId = extractXhsUserId(profileUrl);
-    if (!userId) {
-      setMessage("请粘贴有效的小红书达人主页链接");
+    const query = profileUrl.trim();
+    if (!query) {
+      setMessage("请输入小红书主页链接、user_id 或小红书号");
       return;
     }
     try {
       setLoading(true);
       setMessage("");
-      setProfile(await api.xhsCreatorProfile(userId));
+      setResolvedBy("");
+      const resolved = await api.resolveXhsUser(query);
+      setResolvedBy(resolved.match_type);
+      setProfile(await api.xhsCreatorProfile(resolved.user_id));
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "达人数据获取失败");
     } finally {
@@ -154,13 +158,13 @@ function CreatorView({ onAcceptDeal }: { onAcceptDeal: (deal: Deal) => void }) {
       <section className="panel p-4">
         <div className="grid gap-3 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <SectionTitle icon={Search} title="小红书达人主页链接搜索" />
-            <p className="mt-2 text-sm text-slate-600">粘贴达人主页链接，系统会自动提取 user_id 并更新当前身价测算。</p>
+            <SectionTitle icon={Search} title="小红书达人搜索" />
+            <p className="mt-2 text-sm text-slate-600">输入达人主页链接、user_id 或小红书号，系统会自动解析并更新当前身价测算。</p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <input
               className="control min-w-80"
-              placeholder="粘贴小红书达人主页链接"
+              placeholder="粘贴主页链接 / 输入 user_id / 输入小红书号"
               value={profileUrl}
               onChange={(event) => setProfileUrl(event.target.value)}
               onKeyDown={(event) => {
@@ -178,6 +182,7 @@ function CreatorView({ onAcceptDeal }: { onAcceptDeal: (deal: Deal) => void }) {
           <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
             <span className="rounded-full bg-teal/10 px-2.5 py-1 font-medium text-teal">已接入实时数据</span>
             {profile.source ? <span>来源: {profile.source === "tikhub" ? "TikHub" : profile.source}</span> : null}
+            {resolvedBy ? <span>匹配方式: {formatResolvedBy(resolvedBy)}</span> : null}
             <span>UID: {profile.user_id}</span>
             {profile.red_id ? <span>小红书号: {profile.red_id}</span> : null}
             {profile.account_status ? <span className="rounded-full bg-coral/10 px-2.5 py-1 font-medium text-coral">{profile.account_status}</span> : null}
@@ -1195,33 +1200,22 @@ function buildDisplayCreator(profile: XhsCreatorProfile | null): DisplayCreator 
   };
 }
 
-function extractXhsUserId(input: string) {
-  const value = input.trim();
-  if (!value) return "";
-
-  const pathMatch = value.match(/\/user\/profile\/([^/?#]+)/i);
-  if (pathMatch?.[1]) return decodeURIComponent(pathMatch[1]);
-
-  try {
-    const url = new URL(value);
-    const parts = url.pathname.split("/").filter(Boolean);
-    const profileIndex = parts.findIndex((part) => part.toLowerCase() === "profile");
-    if (profileIndex >= 0 && parts[profileIndex + 1]) {
-      return decodeURIComponent(parts[profileIndex + 1]);
-    }
-  } catch {
-    // Allow direct user_id input during local testing.
-  }
-
-  return /^[a-zA-Z0-9_-]{8,}$/.test(value) ? value : "";
-}
-
 function getXhsRawData(raw: unknown): Record<string, unknown> {
   if (!raw || typeof raw !== "object") return {};
   const body = (raw as { body?: unknown }).body;
   if (!body || typeof body !== "object") return {};
   const data = (body as { data?: unknown }).data;
   return data && typeof data === "object" ? (data as Record<string, unknown>) : {};
+}
+
+function formatResolvedBy(value: string) {
+  const labels: Record<string, string> = {
+    profile_url: "主页链接",
+    user_id: "user_id",
+    red_id: "小红书号",
+    search: "用户搜索"
+  };
+  return labels[value] || value;
 }
 
 function pickRawDisplay(source: Record<string, unknown>, ...keys: string[]) {

@@ -1,4 +1,4 @@
-import type { DashboardSummary, Job, Keyword, Post, Project, Creator, PgyCreator, XhsCreatorProfile, XhsTrackAnalysis } from "./types";
+import type { DashboardSummary, Job, Keyword, Post, Project, Creator, PgyCreator, XhsCreatorProfile, XhsResolvedUser, XhsTrackAnalysis } from "./types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:18000/api";
 
@@ -9,7 +9,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
   if (!response.ok) {
     const error = await response.text();
-    throw new Error(error || response.statusText);
+    throw new Error(formatApiError(error, response.statusText));
   }
   if (response.status === 204) {
     return undefined as T;
@@ -33,6 +33,7 @@ export const api = {
       `/marketplace/pgy-creators?track=${encodeURIComponent(track)}&limit=${limit}`
     ),
   jobs: () => request<Job[]>("/jobs"),
+  resolveXhsUser: (value: string) => request<XhsResolvedUser>(`/dataflow/xhs/resolve-user?value=${encodeURIComponent(value)}`),
   xhsCreatorProfile: (userId: string) => request<XhsCreatorProfile>(`/dataflow/xhs/users/${encodeURIComponent(userId)}`),
   xhsTrackAnalysis: (userId: string) => request<XhsTrackAnalysis>(`/dataflow/xhs/users/${encodeURIComponent(userId)}/track-analysis`),
   keywordTrend: () => request<{ date: string; keyword?: string; platform?: string; count: number }[]>("/analytics/keyword-trend"),
@@ -52,6 +53,37 @@ export const api = {
     return request<Job>("/import/json", { method: "POST", body: form });
   }
 };
+
+function formatApiError(errorText: string, fallback: string) {
+  const parsed = parseJsonValue(errorText);
+  const detail = pickErrorDetail(parsed) ?? errorText;
+  const nested = typeof detail === "string" ? parseJsonValue(detail) : detail;
+  const nestedDetail = pickErrorDetail(nested);
+  const message = nestedDetail ?? detail;
+
+  if (typeof message === "string") return message;
+  if (message && typeof message === "object") {
+    const record = message as Record<string, unknown>;
+    if (typeof record.message_zh === "string") return record.message_zh;
+    if (typeof record.message === "string") return record.message;
+    if (typeof record.msg === "string") return record.msg;
+  }
+  return fallback;
+}
+
+function pickErrorDetail(value: unknown) {
+  if (!value || typeof value !== "object") return typeof value === "string" ? value : null;
+  const record = value as Record<string, unknown>;
+  return record.detail ?? record.message_zh ?? record.message ?? record.msg ?? null;
+}
+
+function parseJsonValue(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
 
 export function formatNumber(value: number | undefined | null) {
   if (value === undefined || value === null) return "-";

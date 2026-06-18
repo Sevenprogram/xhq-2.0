@@ -1,19 +1,26 @@
 from typing import Any
+from urllib.parse import unquote, urlparse
 
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
 from app.connectors.dataflow_xhs import DataflowConfigError, fetch_xhs_app_user_info, fetch_xhs_app_user_posts
-from app.connectors.tikhub_xhs import TikHubConfigError, fetch_tikhub_xhs_web_v2_user_info
-from app.schemas.dataflow import XhsCreatorProfile, XhsTrackAnalysis
+from app.connectors.tikhub_xhs import TikHubConfigError, fetch_tikhub_xhs_web_v2_user_info, search_tikhub_xhs_users
+from app.schemas.dataflow import XhsCreatorProfile, XhsResolvedUser, XhsTrackAnalysis
 
 router = APIRouter(prefix="/dataflow", tags=["dataflow"])
 
 
+@router.get("/xhs/resolve-user", response_model=XhsResolvedUser)
+def resolve_xhs_user(value: str = Query(..., min_length=1)) -> XhsResolvedUser:
+    return _resolve_xhs_user_value(value)
+
+
 @router.get("/xhs/users/{user_id}", response_model=XhsCreatorProfile)
 def get_xhs_user_profile(user_id: str) -> XhsCreatorProfile:
+    resolved = _resolve_xhs_user_value(user_id)
     try:
-        payload = fetch_tikhub_xhs_web_v2_user_info(user_id)
+        payload = fetch_tikhub_xhs_web_v2_user_info(resolved.user_id)
     except TikHubConfigError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     except httpx.HTTPStatusError as exc:
@@ -22,7 +29,48 @@ def get_xhs_user_profile(user_id: str) -> XhsCreatorProfile:
     except httpx.HTTPError as exc:
         raise HTTPException(status_code=502, detail=f"TikHub request failed: {exc}") from exc
 
-    return _map_tikhub_xhs_profile(user_id, payload)
+    return _map_tikhub_xhs_profile(resolved.user_id, payload)
+
+
+def _resolve_xhs_user_value(value: str) -> XhsResolvedUser:
+    normalized = value.strip()
+    if not normalized:
+        raise HTTPException(status_code=400, detail="value is required")
+
+    linked_user_id = _extract_xhs_user_id(normalized)
+    if linked_user_id:
+        return XhsResolvedUser(input=value, user_id=linked_user_id, match_type="profile_url")
+
+    if _looks_like_xhs_user_id(normalized):
+        return XhsResolvedUser(input=value, user_id=normalized, match_type="user_id")
+
+    try:
+        payload = search_tikhub_xhs_users(normalized)
+    except TikHubConfigError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+    except httpx.HTTPStatusError as exc:
+        detail = exc.response.text or exc.response.reason_phrase
+        raise HTTPException(status_code=exc.response.status_code, detail=detail) from exc
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"TikHub request failed: {exc}") from exc
+
+    user = _find_tikhub_user_search_match(normalized, payload)
+    if not user:
+        raise HTTPException(status_code=404, detail=f"未找到小红书号或用户: {normalized}")
+
+    user_id = _pick_str(user, "id", "user_id", "userId", "userid")
+    if not user_id:
+        raise HTTPException(status_code=404, detail=f"搜索结果缺少 user_id: {normalized}")
+
+    return XhsResolvedUser(
+        input=value,
+        user_id=user_id,
+        red_id=_pick_str(user, "red_id", "redId"),
+        nickname=_pick_str(user, "name", "nickname", "nick_name", "user_name"),
+        avatar_url=_pick_str(user, "image", "images", "imageb", "avatar", "avatar_url"),
+        match_type="red_id" if (_pick_str(user, "red_id", "redId") or "").lower() == normalized.lower() else "search",
+        raw={"body": user, "outer": payload},
+    )
 
 
 @router.get("/xhs/users/{user_id}/track-analysis", response_model=XhsTrackAnalysis)
@@ -100,7 +148,7 @@ def _map_xhs_profile(user_id: str, body: dict[str, Any], outer: dict[str, Any]) 
 
 
 def _map_tikhub_xhs_profile(user_id: str, payload: dict[str, Any]) -> XhsCreatorProfile:
-    data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
+    data = _tikhub_profile_data(payload)
     note_stat = data.get("note_num_stat") if isinstance(data.get("note_num_stat"), dict) else {}
     interactions = data.get("interactions") if isinstance(data.get("interactions"), list) else []
     interaction_total = _interaction_count(interactions, "interaction")
@@ -138,6 +186,72 @@ def _map_tikhub_xhs_profile(user_id: str, payload: dict[str, Any]) -> XhsCreator
         category_tags=[],
         raw={"body": data, "outer": payload},
     )
+
+
+def _tikhub_profile_data(payload: dict[str, Any]) -> dict[str, Any]:
+    data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
+    nested = data.get("data") if isinstance(data.get("data"), dict) else None
+    return nested or data
+
+
+def _extract_xhs_user_id(value: str) -> str | None:
+    path_match = None
+    if "/user/profile/" in value.lower():
+        parts = value.split("/user/profile/", 1)
+        if len(parts) == 2:
+            path_match = parts[1].split("?", 1)[0].split("#", 1)[0].split("/", 1)[0]
+    if path_match:
+        return unquote(path_match).strip() or None
+
+    try:
+        parsed = urlparse(value)
+    except ValueError:
+        return None
+    path_parts = [part for part in parsed.path.split("/") if part]
+    for index, part in enumerate(path_parts):
+        if part.lower() == "profile" and index + 1 < len(path_parts):
+            return unquote(path_parts[index + 1]).strip() or None
+    return None
+
+
+def _looks_like_xhs_user_id(value: str) -> bool:
+    return len(value) >= 20 and all(char.isalnum() or char in "_-" for char in value)
+
+
+def _find_tikhub_user_search_match(value: str, payload: dict[str, Any]) -> dict[str, Any] | None:
+    users = _extract_tikhub_search_users(payload)
+    normalized = value.lower()
+    for user in users:
+        red_id = (_pick_str(user, "red_id", "redId") or "").lower()
+        if red_id == normalized:
+            return user
+    if value.isdigit():
+        return None
+    for user in users:
+        user_id = (_pick_str(user, "id", "user_id", "userId", "userid") or "").lower()
+        nickname = (_pick_str(user, "name", "nickname", "nick_name", "user_name") or "").lower()
+        desc = (_pick_str(user, "desc", "description", "sub_title") or "").lower()
+        if normalized in {user_id, nickname} or normalized in desc:
+            return user
+    return None
+
+
+def _extract_tikhub_search_users(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    candidates: list[Any] = [
+        payload.get("users"),
+        payload.get("items"),
+        payload.get("list"),
+    ]
+    data = payload.get("data")
+    if isinstance(data, dict):
+        candidates.extend([data.get("users"), data.get("items"), data.get("list")])
+        nested = data.get("data")
+        if isinstance(nested, dict):
+            candidates.extend([nested.get("users"), nested.get("items"), nested.get("list")])
+    for candidate in candidates:
+        if isinstance(candidate, list):
+            return [item for item in candidate if isinstance(item, dict)]
+    return []
 
 
 def _interaction_count(items: list[Any], item_type: str) -> int:
